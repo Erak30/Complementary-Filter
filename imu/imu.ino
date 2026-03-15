@@ -7,13 +7,15 @@ void setup() {
   Serial.begin(115200);
   Wire.begin();
   mpu.initialize();
+  if (mpu.testConnection()) {
+    Serial.println("MPU6050 connected!");
+  } else {
+    Serial.println("MPU6050 connection failed");
+  }
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
-  int16_t ax, ay, az;
-  int16_t gx, gy, gz;
-
+  int16_t ax, ay, az, gx, gy, gz;
   mpu.getMotion6(&ax, &ay, &az, &gx, &gy, &gz);
 
   Serial.print(ax); Serial.print(",");
@@ -23,5 +25,5 @@ void loop() {
   Serial.print(gy); Serial.print(",");
   Serial.println(gz);
 
-  delay(1000);
+  delay(50);
 }
